@@ -382,6 +382,52 @@ function enamel_if_locations() {
 }
 
 // ---------------------------------------------------------------------------
+// Auto-updater — checks GitHub releases for new versions
+// ---------------------------------------------------------------------------
+add_filter( 'pre_set_site_transient_update_plugins', 'enamel_if_check_for_update' );
+
+function enamel_if_check_for_update( $transient ) {
+    if ( empty( $transient->checked ) ) {
+        return $transient;
+    }
+
+    $plugin_slug = plugin_basename( __FILE__ );
+    $api_url     = 'https://api.github.com/repos/drharcho/enamel-insurance-form/releases/latest';
+
+    $response = wp_remote_get( $api_url, array(
+        'headers' => array(
+            'Accept'     => 'application/vnd.github+json',
+            'User-Agent' => 'WordPress/' . get_bloginfo( 'version' ),
+        ),
+        'timeout' => 10,
+    ) );
+
+    if ( is_wp_error( $response ) || wp_remote_retrieve_response_code( $response ) !== 200 ) {
+        return $transient;
+    }
+
+    $release = json_decode( wp_remote_retrieve_body( $response ), true );
+
+    if ( empty( $release['tag_name'] ) ) {
+        return $transient;
+    }
+
+    $latest_version = ltrim( $release['tag_name'], 'v' );
+
+    if ( version_compare( $latest_version, ENAMEL_IF_VERSION, '>' ) ) {
+        $transient->response[ $plugin_slug ] = (object) array(
+            'slug'        => dirname( $plugin_slug ),
+            'plugin'      => $plugin_slug,
+            'new_version' => $latest_version,
+            'url'         => 'https://github.com/drharcho/enamel-insurance-form',
+            'package'     => $release['zipball_url'],
+        );
+    }
+
+    return $transient;
+}
+
+// ---------------------------------------------------------------------------
 // Admin settings
 // ---------------------------------------------------------------------------
 if ( is_admin() ) {
