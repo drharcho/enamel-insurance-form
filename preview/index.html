@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enamel Dentistry — Insurance Check Form Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Rubik:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #f0ecfa;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 16px;
+      font-family: 'Rubik', Helvetica, Arial, sans-serif;
+    }
+    .preview-label {
+      font-family: 'Rubik', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      color: #7D55C7;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 16px;
+      opacity: 0.7;
+    }
+
+    /* ── Form styles (copied from enamel-form.css) ── */
+    .enamel-form-wrapper {
+      --enamel-purple:   #7D55C7;
+      --enamel-dark:     #231942;
+      --enamel-surface:  #2D1F54;
+      --enamel-lavender: #EDE9FF;
+      --enamel-orange:   #E56B10;
+      --enamel-white:    #ffffff;
+      --enamel-radius:   16px;
+      --enamel-shadow:   0 8px 40px rgba(125, 85, 199, 0.18);
+      display: flex;
+      justify-content: center;
+      padding: 0;
+      width: 100%;
+      max-width: 560px;
+    }
+    .enamel-form-card {
+      background: var(--enamel-white);
+      border-radius: var(--enamel-radius);
+      box-shadow: var(--enamel-shadow);
+      overflow: hidden;
+      width: 100%;
+    }
+    .enamel-form-header {
+      background: var(--enamel-dark);
+      padding: 32px 40px;
+    }
+    .enamel-form-header h2 {
+      font-family: 'Montserrat', Helvetica, Arial, sans-serif;
+      font-weight: 800;
+      font-size: 26px;
+      color: var(--enamel-white);
+      margin: 0 0 8px 0;
+      line-height: 1.2;
+      letter-spacing: -0.3px;
+    }
+    .enamel-form-header p {
+      font-family: 'Rubik', Helvetica, Arial, sans-serif;
+      font-weight: 400;
+      font-size: 15px;
+      color: rgba(255,255,255,0.8);
+      margin: 0;
+      line-height: 1.5;
+    }
+    .enamel-form-body { padding: 32px 40px; }
+    .enamel-form-field { margin-bottom: 20px; }
+    .enamel-form-field--submit { margin-top: 28px; margin-bottom: 0; }
+    .enamel-label {
+      display: block;
+      font-family: 'Rubik', Helvetica, Arial, sans-serif;
+      font-weight: 500;
+      font-size: 12px;
+      color: var(--enamel-dark);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 7px;
+    }
+    .enamel-input {
+      display: block;
+      width: 100%;
+      border: 2px solid var(--enamel-lavender);
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-family: 'Rubik', Helvetica, Arial, sans-serif;
+      font-weight: 400;
+      font-size: 15px;
+      color: var(--enamel-dark);
+      background: var(--enamel-white);
+      outline: none;
+      transition: border-color 0.18s ease, box-shadow 0.18s ease;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .enamel-input::placeholder { color: #b0a8cc; }
+    .enamel-input:focus {
+      border-color: var(--enamel-purple);
+      box-shadow: 0 0 0 3px rgba(125,85,199,0.12);
+    }
+    .enamel-input:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      background: #f9f7fe;
+    }
+    .enamel-select {
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237D55C7' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 40px;
+    }
+    .enamel-combobox { position: relative; }
+    .enamel-combobox-input { padding-right: 44px; }
+    .enamel-combobox--disabled .enamel-combobox-input,
+    .enamel-combobox--disabled .enamel-combobox-toggle { opacity: 0.5; cursor: not-allowed; }
+    .enamel-combobox-toggle {
+      position: absolute; right: 0; top: 0; bottom: 0;
+      background: none; border: none; padding: 0 14px;
+      color: var(--enamel-purple); cursor: pointer; font-size: 12px;
+      display: flex; align-items: center; justify-content: center;
+      transition: transform 0.15s ease;
+    }
+    .enamel-combobox-toggle:disabled { cursor: not-allowed; opacity: 0.5; }
+    .enamel-combobox-toggle.open { transform: rotate(180deg); }
+    .enamel-combobox-list {
+      position: absolute; top: 100%; left: 0; right: 0;
+      background: var(--enamel-white);
+      border: 2px solid var(--enamel-purple);
+      border-top: none;
+      border-radius: 0 0 8px 8px;
+      max-height: 220px; overflow-y: auto;
+      z-index: 1000; list-style: none; margin: 0; padding: 4px 0;
+      box-shadow: 0 8px 24px rgba(125,85,199,0.12);
+    }
+    .enamel-combobox-list li {
+      padding: 10px 16px;
+      font-family: 'Rubik', Helvetica, Arial, sans-serif;
+      font-weight: 400; font-size: 14px; color: var(--enamel-dark);
+      cursor: pointer; transition: background 0.12s ease, color 0.12s ease;
+    }
+    .enamel-combobox-list li:hover { background: var(--enamel-lavender); }
+    .enamel-combobox-list li.highlighted { background: var(--enamel-purple); color: var(--enamel-white); }
+    .enamel-combobox-list li.no-results { color: #999; font-style: italic; cursor: default; }
+    .enamel-combobox-list li.no-results:hover { background: transparent; color: #999; }
+    .enamel-field-error {
+      display: block;
+      font-family: 'Rubik', Helvetica, Arial, sans-serif;
+      font-weight: 300; font-size: 12px; color: var(--enamel-orange);
+      margin-top: 5px; min-height: 16px; line-height: 1.4;
+    }
+    .enamel-input.has-error { border-color: var(--enamel-orange); }
+    .enamel-input.has-error:focus { box-shadow: 0 0 0 3px rgba(229,107,16,0.12); }
+    .enamel-submit-btn {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      width: 100%; background: var(--enamel-orange); color: var(--enamel-white);
+      font-family: 'Montserrat', Helvetica, Arial, sans-serif;
+      font-weight: 700; font-size: 14px; text-transform: uppercase;
+      letter-spacing: 1.2px; border: none; border-radius: 8px;
+      padding: 15px 24px; cursor: pointer;
+      transition: background 0.18s ease, transform 0.12s ease, box-shadow 0.18s ease;
+      box-shadow: 0 4px 16px rgba(229,107,16,0.25);
+    }
+    .enamel-submit-btn:hover:not(:disabled) { background: #c95d0c; box-shadow: 0 6px 20px rgba(229,107,16,0.35); }
+    .enamel-submit-btn:active:not(:disabled) { transform: translateY(1px); }
+    .enamel-submit-btn:disabled { opacity: 0.7; cursor: not-allowed; }
+    .enamel-btn-spinner {
+      display: inline-block; width: 16px; height: 16px;
+      border: 2px solid rgba(255,255,255,0.4); border-top-color: #fff;
+      border-radius: 50%; animation: enamel-spin 0.7s linear infinite; flex-shrink: 0;
+    }
+    @keyframes enamel-spin { to { transform: rotate(360deg); } }
+    .enamel-result {
+      padding: 24px 32px; border-top: 1px solid var(--enamel-lavender);
+      margin: 0 8px 8px 8px; border-radius: 10px;
+      animation: enamel-fade-in 0.3s ease;
+    }
+    @keyframes enamel-fade-in {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .enamel-result.accepted {
+      border-left: 4px solid var(--enamel-purple);
+      background: var(--enamel-lavender); border-top-color: transparent;
+    }
+    .enamel-result.not-accepted {
+      border-left: 4px solid var(--enamel-orange);
+      background: #fff8f5; border-top-color: transparent;
+    }
+    .enamel-result h3 {
+      font-family: 'Montserrat', Helvetica, Arial, sans-serif;
+      font-weight: 700; font-size: 18px; color: var(--enamel-dark);
+      margin: 0 0 10px 0;
+    }
+    .enamel-result p {
+      font-family: 'Rubik', Helvetica, Arial, sans-serif;
+      font-weight: 400; font-size: 14px; color: var(--enamel-dark);
+      margin: 0; line-height: 1.6;
+    }
+    .enamel-result .enamel-result-icon { font-size: 28px; margin-bottom: 12px; display: block; }
+    .enamel-label .req { color: var(--enamel-orange); margin-left: 2px; }
+    .enamel-result-actions { display: flex; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
+    .enamel-action-btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 11px 22px; border-radius: 8px;
+      font-family: 'Montserrat', Helvetica, Arial, sans-serif;
+      font-weight: 700; font-size: 13px; text-transform: uppercase;
+      letter-spacing: 1px; text-decoration: none;
+      transition: background 0.18s ease, box-shadow 0.18s ease, transform 0.12s ease; cursor: pointer;
+    }
+    .enamel-book-btn { background: var(--enamel-purple); color: var(--enamel-white); box-shadow: 0 4px 14px rgba(125,85,199,0.3); }
+    .enamel-book-btn:hover { background: #6a45b0; }
+    .enamel-call-btn { background: var(--enamel-white); color: var(--enamel-dark); border: 2px solid var(--enamel-lavender); }
+    .enamel-call-btn:hover { border-color: var(--enamel-purple); color: var(--enamel-purple); }
+    .enamel-action-btn:active { transform: translateY(1px); }
+    @media (max-width: 480px) {
+      .enamel-form-header { padding: 24px; }
+      .enamel-form-header h2 { font-size: 22px; }
+      .enamel-form-body { padding: 24px; }
+      .enamel-result { padding: 20px; margin: 0 4px 4px 4px; }
+      .enamel-submit-btn { font-size: 13px; }
+    }
+  </style>
+</head>
+<body>
+  <p class="preview-label">Form Preview — Mock Data</p>
+
+  <div class="enamel-form-wrapper">
+    <div class="enamel-form-card">
+      <div class="enamel-form-header">
+        <h2>Check Your Insurance</h2>
+        <p>Find out if we accept your insurance at your nearest location.</p>
+      </div>
+      <div class="enamel-form-body">
+        <form id="enamel-insurance-form" novalidate>
+
+          <div class="enamel-form-field">
+            <label for="enamel-name" class="enamel-label">Full Name <span class="req" aria-hidden="true">*</span></label>
+            <input type="text" id="enamel-name" name="name" class="enamel-input" placeholder="Jane Smith" autocomplete="name" required>
+            <span class="enamel-field-error" id="enamel-name-error" aria-live="polite"></span>
+          </div>
+
+          <div class="enamel-form-field">
+            <label for="enamel-phone" class="enamel-label">Phone Number <span class="req" aria-hidden="true">*</span></label>
+            <input type="tel" id="enamel-phone" name="phone" class="enamel-input" placeholder="(512) 555-0100" autocomplete="tel" required>
+            <span class="enamel-field-error" id="enamel-phone-error" aria-live="polite"></span>
+          </div>
+
+          <div class="enamel-form-field">
+            <label for="enamel-email" class="enamel-label">Email Address <span class="req" aria-hidden="true">*</span></label>
+            <input type="email" id="enamel-email" name="email" class="enamel-input" placeholder="jane@example.com" autocomplete="email" required>
+            <span class="enamel-field-error" id="enamel-email-error" aria-live="polite"></span>
+          </div>
+
+          <div class="enamel-form-field">
+            <label for="enamel-location" class="enamel-label">Location</label>
+            <select id="enamel-location" name="location" class="enamel-input enamel-select">
+              <option value="">— Select a location —</option>
+              <option value="Enamel Dentistry South Lamar">Enamel Dentistry South Lamar</option>
+              <option value="Enamel Dentistry Parmer Park">Enamel Dentistry Parmer Park</option>
+              <option value="Enamel Dentistry Lantana">Enamel Dentistry Lantana</option>
+              <option value="Enamel Dentistry Saltillo">Enamel Dentistry Saltillo</option>
+              <option value="Enamel Dentistry Domain">Enamel Dentistry Domain</option>
+              <option value="Enamel Dentistry McKinney">Enamel Dentistry McKinney</option>
+              <option value="Enamel Dentistry Manor">Enamel Dentistry Manor</option>
+              <option value="Enamel Dentistry at the Grove">Enamel Dentistry at the Grove</option>
+              <option value="Enamel Dentistry Easton Park">Enamel Dentistry Easton Park</option>
+              <option value="Enamel Dentistry Leander">Enamel Dentistry Leander</option>
+            </select>
+            <span class="enamel-field-error" id="enamel-location-error" aria-live="polite"></span>
+          </div>
+
+          <div class="enamel-form-field">
+            <label for="enamel-insurance-input" class="enamel-label">Insurance Provider</label>
+            <div class="enamel-combobox enamel-combobox--disabled" id="insurance-combobox">
+              <input type="text" id="enamel-insurance-input" class="enamel-input enamel-combobox-input"
+                placeholder="Select a location first…" autocomplete="off" disabled
+                aria-haspopup="listbox" aria-expanded="false" aria-controls="enamel-insurance-listbox">
+              <button type="button" class="enamel-combobox-toggle" aria-label="Toggle insurance list" disabled>&#9660;</button>
+              <ul class="enamel-combobox-list" id="enamel-insurance-listbox" role="listbox" style="display:none;"></ul>
+            </div>
+            <input type="hidden" name="insurance" id="enamel-insurance-value">
+            <span class="enamel-field-error" id="enamel-insurance-error" aria-live="polite"></span>
+          </div>
+
+          <div class="enamel-form-field enamel-form-field--submit">
+            <button type="submit" id="enamel-submit-btn" class="enamel-submit-btn">
+              <span class="enamel-btn-label">Check My Insurance</span>
+              <span class="enamel-btn-spinner" style="display:none;"></span>
+            </button>
+            <span class="enamel-field-error" id="enamel-submit-error" aria-live="polite"></span>
+          </div>
+        </form>
+
+        <div id="enamel-form-result" class="enamel-result" style="display:none;" aria-live="polite"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    'use strict';
+
+    // ── Real location data (Subscribili booking links) ────────────────────
+    var MOCK_BOOKING = {
+      'Enamel Dentistry South Lamar':  { url: 'https://enamel.subscribili.com/appointments?locid=1667206608814bb935', phone: '(512) 717-5315' },
+      'Enamel Dentistry Parmer Park':  { url: 'https://enamel.subscribili.com/appointments?locid=1667206608975d97b8', phone: '(512) 572-0215' },
+      'Enamel Dentistry Lantana':      { url: 'https://enamel.subscribili.com/appointments?locid=1667206608b3c6ef63', phone: '(512) 648-6115' },
+      'Enamel Dentistry Saltillo':     { url: 'https://enamel.subscribili.com/appointments?locid=1667207221a259e44e', phone: '(512) 649-7510' },
+      'Enamel Dentistry Domain':       { url: 'https://enamel.subscribili.com/appointments?locid=16672072212d957aa2', phone: '(512) 646-0815' },
+      'Enamel Dentistry McKinney':     { url: 'https://enamel.subscribili.com/appointments?locid=16711668866ea8284e', phone: '(469) 663-0515' },
+      'Enamel Dentistry Manor':        { url: 'https://enamel.subscribili.com/appointments?locid=16790711557db1e93b', phone: '(512) 982-1272' },
+      'Enamel Dentistry at the Grove': { url: 'https://enamel.subscribili.com/appointments?locid=166720722184ee6bb5', phone: '(512) 884-5658' },
+      'Enamel Dentistry Easton Park':  { url: 'https://enamel.subscribili.com/appointments?locid=17574429568b39744e', phone: '(512) 489-4015' },
+      'Enamel Dentistry Leander':      { url: 'https://enamel.subscribili.com/appointments?locid=17574454288bc0d53c', phone: '(512) 337-3415' },
+    };
+
+    // ── Real accepted insurance plans (from fee schedule, updated 2025) ──
+    var ACCEPTED_INSURANCES = [
+      'Aetna',
+      'Always Care',
+      'Ameritas',
+      'Anthem',
+      'Beam Dental',
+      'Blue Cross Blue Shield (BCBS)',
+      'Carefirst BCBS',
+      'Careington',
+      'Cigna',
+      'Delta Dental',
+      'Dental Select',
+      'Equitable',
+      'Freedom Life / US Health',
+      'GEHA',
+      'Guardian',
+      'Humana',
+      'Lincoln Financial',
+      'MetLife',
+      'Mutual of Omaha',
+      'Premera BCBS',
+      'Principal',
+      'Renaissance',
+      'Sunlife',
+      'The Standard',
+      'UCCI',
+      'United Healthcare (UHC)',
+      'Unum'
+    ];
+
+    var MOCK_INSURANCES = {
+      'Enamel Dentistry South Lamar':  ACCEPTED_INSURANCES,
+      'Enamel Dentistry Parmer Park':  ACCEPTED_INSURANCES,
+      'Enamel Dentistry Lantana':      ACCEPTED_INSURANCES,
+      'Enamel Dentistry Saltillo':     ACCEPTED_INSURANCES,
+      'Enamel Dentistry Domain':       ACCEPTED_INSURANCES,
+      'Enamel Dentistry McKinney':     ACCEPTED_INSURANCES,
+      'Enamel Dentistry Manor':        ACCEPTED_INSURANCES,
+      'Enamel Dentistry at the Grove': ACCEPTED_INSURANCES,
+      'Enamel Dentistry Easton Park':  ACCEPTED_INSURANCES,
+      'Enamel Dentistry Leander':      ACCEPTED_INSURANCES
+    };
+
+    // ── DOM refs ──────────────────────────────────────────────────────────
+    var form, locationSelect, comboboxWrapper, comboboxInput, comboboxToggle,
+        comboboxList, insuranceHidden, submitBtn, btnLabel, btnSpinner, resultDiv;
+
+    var allInsurances = [], filteredInsurances = [], highlightedIndex = -1;
+
+    document.addEventListener('DOMContentLoaded', function () {
+      form            = document.getElementById('enamel-insurance-form');
+      locationSelect  = document.getElementById('enamel-location');
+      comboboxWrapper = document.getElementById('insurance-combobox');
+      comboboxInput   = document.getElementById('enamel-insurance-input');
+      comboboxToggle  = comboboxWrapper.querySelector('.enamel-combobox-toggle');
+      comboboxList    = document.getElementById('enamel-insurance-listbox');
+      insuranceHidden = document.getElementById('enamel-insurance-value');
+      submitBtn       = document.getElementById('enamel-submit-btn');
+      btnLabel        = submitBtn.querySelector('.enamel-btn-label');
+      btnSpinner      = submitBtn.querySelector('.enamel-btn-spinner');
+      resultDiv       = document.getElementById('enamel-form-result');
+      bindEvents();
+    });
+
+    function bindEvents() {
+      locationSelect.addEventListener('change', handleLocationChange);
+      comboboxInput.addEventListener('keyup',   handleComboboxKeyup);
+      comboboxInput.addEventListener('keydown', handleComboboxKeydown);
+      comboboxInput.addEventListener('focus',   handleComboboxFocus);
+      comboboxInput.addEventListener('input',   function () { insuranceHidden.value = ''; });
+      comboboxToggle.addEventListener('click',  handleToggleClick);
+      form.addEventListener('submit', handleFormSubmit);
+      document.addEventListener('click', function (e) {
+        if (!comboboxWrapper.contains(e.target)) closeCombobox();
+      });
+    }
+
+    // ── Location change (uses mock data) ──────────────────────────────────
+    function handleLocationChange() {
+      var location = locationSelect.value;
+      resetCombobox();
+      if (!location) { disableCombobox('Select a location first…'); return; }
+
+      // Simulate async load
+      setComboboxLoading(true);
+      setTimeout(function () {
+        setComboboxLoading(false);
+        allInsurances = MOCK_INSURANCES[location] || [];
+        populateCombobox(allInsurances);
+        enableCombobox();
+      }, 400);
+    }
+
+    // ── Combobox helpers ──────────────────────────────────────────────────
+    function disableCombobox(placeholder) {
+      comboboxWrapper.classList.add('enamel-combobox--disabled');
+      comboboxInput.disabled = true; comboboxToggle.disabled = true;
+      comboboxInput.placeholder = placeholder || 'Select a location first…';
+      comboboxInput.value = ''; insuranceHidden.value = '';
+      closeCombobox();
+    }
+    function enableCombobox() {
+      comboboxWrapper.classList.remove('enamel-combobox--disabled');
+      comboboxInput.disabled = false; comboboxToggle.disabled = false;
+      comboboxInput.placeholder = 'Type to search your insurance…';
+    }
+    function resetCombobox() {
+      allInsurances = []; filteredInsurances = []; highlightedIndex = -1;
+      comboboxInput.value = ''; insuranceHidden.value = '';
+      comboboxList.innerHTML = ''; closeCombobox();
+      clearFieldError('enamel-insurance-error');
+    }
+    function setComboboxLoading(on) {
+      if (on) {
+        comboboxWrapper.classList.add('enamel-combobox--disabled');
+        comboboxInput.disabled = true; comboboxToggle.disabled = true;
+        comboboxInput.placeholder = 'Loading…';
+        comboboxList.innerHTML = '<li style="padding:10px 16px;font-size:13px;color:#7D55C7;">Loading insurance list…</li>';
+        openCombobox();
+      } else {
+        comboboxList.innerHTML = ''; closeCombobox();
+      }
+    }
+    function populateCombobox(items) {
+      comboboxList.innerHTML = ''; filteredInsurances = items; highlightedIndex = -1;
+      if (!items.length) {
+        comboboxList.innerHTML = '<li class="no-results">No insurances found for this location.</li>';
+        return;
+      }
+      items.forEach(function (name, i) {
+        var li = document.createElement('li');
+        li.textContent = name;
+        li.setAttribute('role', 'option');
+        li.setAttribute('aria-selected', 'false');
+        li.addEventListener('click', function () { selectInsurance(name); });
+        li.addEventListener('mouseenter', function () { setHighlighted(i); });
+        comboboxList.appendChild(li);
+      });
+    }
+    function selectInsurance(name) {
+      comboboxInput.value = name; insuranceHidden.value = name;
+      comboboxInput.setAttribute('aria-expanded', 'false');
+      clearFieldError('enamel-insurance-error');
+      closeCombobox();
+    }
+    function openCombobox() {
+      if (!comboboxList.children.length) return;
+      comboboxList.style.display = 'block';
+      comboboxInput.setAttribute('aria-expanded', 'true');
+      comboboxToggle.classList.add('open');
+    }
+    function closeCombobox() {
+      comboboxList.style.display = 'none';
+      comboboxInput.setAttribute('aria-expanded', 'false');
+      comboboxToggle.classList.remove('open');
+      highlightedIndex = -1; removeAllHighlights();
+    }
+    function handleComboboxFocus() {
+      if (allInsurances.length) { filterCombobox(comboboxInput.value); openCombobox(); }
+    }
+    function handleComboboxKeyup(e) {
+      var skip = ['ArrowDown','ArrowUp','Enter','Escape','Tab','Shift','Control','Alt','Meta'];
+      if (skip.indexOf(e.key) !== -1) return;
+      filterCombobox(comboboxInput.value);
+      if (filteredInsurances.length) openCombobox();
+    }
+    function handleComboboxKeydown(e) {
+      if (e.key === 'ArrowDown') { e.preventDefault(); openCombobox(); moveHighlight(1); }
+      else if (e.key === 'ArrowUp') { e.preventDefault(); moveHighlight(-1); }
+      else if (e.key === 'Enter') {
+        e.preventDefault();
+        if (highlightedIndex >= 0 && filteredInsurances[highlightedIndex])
+          selectInsurance(filteredInsurances[highlightedIndex]);
+      } else if (e.key === 'Escape') { closeCombobox(); }
+    }
+    function handleToggleClick() {
+      if (comboboxInput.disabled) return;
+      if (comboboxList.style.display === 'none') { filterCombobox(comboboxInput.value); openCombobox(); comboboxInput.focus(); }
+      else closeCombobox();
+    }
+    function filterCombobox(q) {
+      q = q.trim().toLowerCase();
+      filteredInsurances = q
+        ? allInsurances.filter(function (n) { return n.toLowerCase().indexOf(q) !== -1; })
+        : allInsurances.slice();
+      populateCombobox(filteredInsurances);
+    }
+    function moveHighlight(dir) {
+      var items = comboboxList.querySelectorAll('li:not(.no-results)');
+      if (!items.length) return;
+      var next = highlightedIndex + dir;
+      if (next < 0) next = items.length - 1;
+      if (next >= items.length) next = 0;
+      setHighlighted(next);
+      if (items[next]) items[next].scrollIntoView({ block: 'nearest' });
+    }
+    function setHighlighted(i) {
+      removeAllHighlights(); highlightedIndex = i;
+      var items = comboboxList.querySelectorAll('li:not(.no-results)');
+      if (items[i]) { items[i].classList.add('highlighted'); items[i].setAttribute('aria-selected','true'); }
+    }
+    function removeAllHighlights() {
+      comboboxList.querySelectorAll('li').forEach(function (li) {
+        li.classList.remove('highlighted'); li.setAttribute('aria-selected','false');
+      });
+    }
+
+    // ── Form submit (mocked) ──────────────────────────────────────────────
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      clearAllErrors();
+
+      var name      = document.getElementById('enamel-name').value.trim();
+      var phone     = document.getElementById('enamel-phone').value.trim();
+      var email     = document.getElementById('enamel-email').value.trim();
+      var location  = locationSelect.value.trim();
+      var insurance = insuranceHidden.value.trim();
+      var valid = true;
+
+      if (!name)  { setFieldError('enamel-name-error','Please enter your full name.'); setInputError('enamel-name'); valid=false; }
+      if (!phone) { setFieldError('enamel-phone-error','Please enter your phone number.'); setInputError('enamel-phone'); valid=false; }
+      else if (!isValidPhone(phone)) { setFieldError('enamel-phone-error','Please enter a valid phone number (e.g. 512-555-0100).'); setInputError('enamel-phone'); valid=false; }
+      if (!email) { setFieldError('enamel-email-error','Please enter your email address.'); setInputError('enamel-email'); valid=false; }
+      else if (!isValidEmail(email)) { setFieldError('enamel-email-error','Please enter a valid email address.'); setInputError('enamel-email'); valid=false; }
+      if (!location) { setFieldError('enamel-location-error','Please select a location.'); setInputError('enamel-location'); valid=false; }
+      if (!insurance) { setFieldError('enamel-insurance-error','Please select your insurance provider.'); valid=false; }
+      if (!valid) return;
+
+      setLoadingState(true);
+      setTimeout(function () {
+        setLoadingState(false);
+        var list     = MOCK_INSURANCES[location] || [];
+        var accepted = list.some(function (i) { return i.toLowerCase() === insurance.toLowerCase(); });
+        var booking  = MOCK_BOOKING[location] || {};
+        var message  = accepted
+          ? 'Great news! We accept ' + insurance + ' at ' + location + '. We\u2019ll be in touch soon to schedule your appointment!'
+          : 'We don\u2019t currently list ' + insurance + ' at ' + location + ', but our team will reach out to explore your options.';
+        showResult(accepted, message, accepted ? booking.url : '', accepted ? booking.phone : '');
+      }, 1200);
+    }
+
+    function showResult(accepted, message, bookingUrl, phone) {
+      form.style.display = 'none';
+      var buttonsHtml = '';
+      if (accepted) {
+        if (bookingUrl) buttonsHtml += '<a href="' + escapeHtml(bookingUrl) + '" class="enamel-action-btn enamel-book-btn" target="_blank" rel="noopener">Book Online</a>';
+        if (phone)      buttonsHtml += '<a href="tel:' + phone.replace(/[^\d\+]/g,'') + '" class="enamel-action-btn enamel-call-btn">Call Now</a>';
+        if (buttonsHtml) buttonsHtml = '<div class="enamel-result-actions">' + buttonsHtml + '</div>';
+      }
+      resultDiv.className = 'enamel-result ' + (accepted ? 'accepted' : 'not-accepted');
+      resultDiv.innerHTML =
+        '<span class="enamel-result-icon" aria-hidden="true">' + (accepted ? '✓' : 'ℹ') + '</span>' +
+        '<h3>' + (accepted ? 'You\u2019re covered!' : 'We\u2019ll help you out') + '</h3>' +
+        '<p>' + escapeHtml(message) + '</p>' + buttonsHtml;
+      resultDiv.style.display = 'block';
+      resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function isValidPhone(p) { return /^\d{7,15}$/.test(p.replace(/[\s\-\.\(\)\+]/g,'')); }
+    function isValidEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e); }
+    function setLoadingState(on) {
+      submitBtn.disabled = on;
+      btnLabel.style.display  = on ? 'none' : '';
+      btnSpinner.style.display = on ? 'inline-block' : 'none';
+    }
+    function setFieldError(id, msg) { var el=document.getElementById(id); if(el) el.textContent=msg; }
+    function clearFieldError(id)    { var el=document.getElementById(id); if(el) el.textContent=''; }
+    function setInputError(id)      { var el=document.getElementById(id); if(el) el.classList.add('has-error'); }
+    function clearAllErrors() {
+      ['enamel-name-error','enamel-phone-error','enamel-email-error','enamel-location-error','enamel-insurance-error','enamel-submit-error']
+        .forEach(clearFieldError);
+      ['enamel-name','enamel-phone','enamel-email','enamel-location'].forEach(function(id){
+        var el=document.getElementById(id); if(el) el.classList.remove('has-error');
+      });
+    }
+    function escapeHtml(s) {
+      return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;');
+    }
+  })();
+  </script>
+</body>
+</html>

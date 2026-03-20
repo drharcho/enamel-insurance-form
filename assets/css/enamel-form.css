@@ -1,0 +1,468 @@
+/**
+ * Enamel Insurance Form — Stylesheet
+ * Brand: Energetic, Innovative, Professional, Friendly
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Rubik:wght@300;400;500&display=swap');
+
+/* ---------------------------------------------------------------------------
+   CSS Custom Properties
+--------------------------------------------------------------------------- */
+.enamel-form-wrapper {
+    --enamel-purple:   #7D55C7;
+    --enamel-dark:     #231942;
+    --enamel-surface:  #2D1F54;
+    --enamel-lavender: #EDE9FF;
+    --enamel-orange:   #E56B10;
+    --enamel-white:    #ffffff;
+    --enamel-radius:   16px;
+    --enamel-shadow:   0 8px 40px rgba(125, 85, 199, 0.15);
+}
+
+/* ---------------------------------------------------------------------------
+   Wrapper & Card
+--------------------------------------------------------------------------- */
+.enamel-form-wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.enamel-form-card {
+    background: var(--enamel-white);
+    border-radius: var(--enamel-radius);
+    box-shadow: var(--enamel-shadow);
+    overflow: hidden;
+    width: 100%;
+    max-width: 560px;
+}
+
+/* ---------------------------------------------------------------------------
+   Header
+--------------------------------------------------------------------------- */
+.enamel-form-header {
+    background: var(--enamel-dark);
+    padding: 32px 40px;
+    text-align: left;
+}
+
+.enamel-form-header h2 {
+    font-family: 'Montserrat', Helvetica, Arial, sans-serif;
+    font-weight: 800;
+    font-size: 26px;
+    color: var(--enamel-white);
+    margin: 0 0 8px 0;
+    line-height: 1.2;
+    letter-spacing: -0.3px;
+}
+
+.enamel-form-header p {
+    font-family: 'Rubik', Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* ---------------------------------------------------------------------------
+   Form Body
+--------------------------------------------------------------------------- */
+.enamel-form-body {
+    padding: 32px 40px;
+}
+
+/* ---------------------------------------------------------------------------
+   Form Fields
+--------------------------------------------------------------------------- */
+.enamel-form-field {
+    margin-bottom: 20px;
+}
+
+.enamel-form-field--submit {
+    margin-top: 28px;
+    margin-bottom: 0;
+}
+
+.enamel-label {
+    display: block;
+    font-family: 'Rubik', Helvetica, Arial, sans-serif;
+    font-weight: 500;
+    font-size: 12px;
+    color: var(--enamel-dark);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 7px;
+}
+
+/* ---------------------------------------------------------------------------
+   Inputs & Select
+--------------------------------------------------------------------------- */
+.enamel-input {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    border: 2px solid var(--enamel-lavender);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-family: 'Rubik', Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    font-size: 15px;
+    color: var(--enamel-dark);
+    background: var(--enamel-white);
+    outline: none;
+    transition: border-color 0.18s ease, box-shadow 0.18s ease;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.enamel-input::placeholder {
+    color: #b0a8cc;
+}
+
+.enamel-input:focus {
+    border-color: var(--enamel-purple);
+    box-shadow: 0 0 0 3px rgba(125, 85, 199, 0.12);
+}
+
+.enamel-input:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: #f9f7fe;
+}
+
+.enamel-select {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237D55C7' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 40px;
+}
+
+/* ---------------------------------------------------------------------------
+   Combobox
+--------------------------------------------------------------------------- */
+.enamel-combobox {
+    position: relative;
+}
+
+.enamel-combobox-input {
+    padding-right: 44px;
+}
+
+.enamel-combobox--disabled .enamel-combobox-input,
+.enamel-combobox--disabled .enamel-combobox-toggle {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.enamel-combobox-toggle {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: none;
+    border: none;
+    padding: 0 14px;
+    color: var(--enamel-purple);
+    cursor: pointer;
+    font-size: 12px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.15s ease;
+}
+
+.enamel-combobox-toggle:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.enamel-combobox-toggle.open {
+    transform: rotate(180deg);
+}
+
+.enamel-combobox-list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--enamel-white);
+    border: 2px solid var(--enamel-purple);
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    max-height: 220px;
+    overflow-y: auto;
+    z-index: 1000;
+    list-style: none;
+    margin: 0;
+    padding: 4px 0;
+    box-shadow: 0 8px 24px rgba(125, 85, 199, 0.12);
+}
+
+.enamel-combobox-list li {
+    padding: 10px 16px;
+    font-family: 'Rubik', Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    color: var(--enamel-dark);
+    cursor: pointer;
+    transition: background 0.12s ease, color 0.12s ease;
+}
+
+.enamel-combobox-list li:hover {
+    background: var(--enamel-lavender);
+    color: var(--enamel-dark);
+}
+
+.enamel-combobox-list li.highlighted {
+    background: var(--enamel-purple);
+    color: var(--enamel-white);
+}
+
+.enamel-combobox-list li.no-results {
+    color: #999;
+    font-style: italic;
+    cursor: default;
+}
+
+.enamel-combobox-list li.no-results:hover {
+    background: transparent;
+    color: #999;
+}
+
+/* ---------------------------------------------------------------------------
+   Loading state inside combobox
+--------------------------------------------------------------------------- */
+.enamel-combobox-loading {
+    padding: 12px 16px;
+    font-family: 'Rubik', Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    color: var(--enamel-purple);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* ---------------------------------------------------------------------------
+   Field Errors
+--------------------------------------------------------------------------- */
+.enamel-field-error {
+    display: block;
+    font-family: 'Rubik', Helvetica, Arial, sans-serif;
+    font-weight: 300;
+    font-size: 12px;
+    color: var(--enamel-orange);
+    margin-top: 5px;
+    min-height: 16px;
+    line-height: 1.4;
+}
+
+.enamel-input.has-error {
+    border-color: var(--enamel-orange);
+}
+
+.enamel-input.has-error:focus {
+    box-shadow: 0 0 0 3px rgba(229, 107, 16, 0.12);
+}
+
+/* ---------------------------------------------------------------------------
+   Submit Button
+--------------------------------------------------------------------------- */
+.enamel-submit-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    background: var(--enamel-orange);
+    color: var(--enamel-white);
+    font-family: 'Montserrat', Helvetica, Arial, sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    border: none;
+    border-radius: 8px;
+    padding: 15px 24px;
+    cursor: pointer;
+    transition: background 0.18s ease, transform 0.12s ease, box-shadow 0.18s ease;
+    box-shadow: 0 4px 16px rgba(229, 107, 16, 0.25);
+}
+
+.enamel-submit-btn:hover:not(:disabled) {
+    background: #c95d0c;
+    box-shadow: 0 6px 20px rgba(229, 107, 16, 0.35);
+}
+
+.enamel-submit-btn:active:not(:disabled) {
+    transform: translateY(1px);
+    box-shadow: 0 2px 8px rgba(229, 107, 16, 0.2);
+}
+
+.enamel-submit-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* ---------------------------------------------------------------------------
+   Loading Spinner
+--------------------------------------------------------------------------- */
+.enamel-btn-spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-top-color: #ffffff;
+    border-radius: 50%;
+    animation: enamel-spin 0.7s linear infinite;
+    flex-shrink: 0;
+}
+
+@keyframes enamel-spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ---------------------------------------------------------------------------
+   Result Area
+--------------------------------------------------------------------------- */
+.enamel-result {
+    padding: 24px 32px;
+    border-top: 1px solid var(--enamel-lavender);
+    margin: 0 8px 8px 8px;
+    border-radius: 10px;
+    animation: enamel-fade-in 0.3s ease;
+}
+
+@keyframes enamel-fade-in {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.enamel-result.accepted {
+    border-left: 4px solid var(--enamel-purple);
+    background: var(--enamel-lavender);
+    border-top-color: transparent;
+}
+
+.enamel-result.not-accepted {
+    border-left: 4px solid var(--enamel-orange);
+    background: #fff8f5;
+    border-top-color: transparent;
+}
+
+.enamel-result h3 {
+    font-family: 'Montserrat', Helvetica, Arial, sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--enamel-dark);
+    margin: 0 0 10px 0;
+}
+
+.enamel-result p {
+    font-family: 'Rubik', Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    color: var(--enamel-dark);
+    margin: 0;
+    line-height: 1.6;
+}
+
+.enamel-result .enamel-result-icon {
+    font-size: 28px;
+    margin-bottom: 12px;
+    display: block;
+}
+
+.enamel-result-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 18px;
+    flex-wrap: wrap;
+}
+
+.enamel-action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 11px 22px;
+    border-radius: 8px;
+    font-family: 'Montserrat', Helvetica, Arial, sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-decoration: none;
+    transition: background 0.18s ease, box-shadow 0.18s ease, transform 0.12s ease;
+    cursor: pointer;
+}
+
+.enamel-book-btn {
+    background: var(--enamel-purple);
+    color: var(--enamel-white);
+    box-shadow: 0 4px 14px rgba(125, 85, 199, 0.3);
+}
+
+.enamel-book-btn:hover {
+    background: #6a45b0;
+    box-shadow: 0 6px 18px rgba(125, 85, 199, 0.4);
+}
+
+.enamel-call-btn {
+    background: var(--enamel-white);
+    color: var(--enamel-dark);
+    border: 2px solid var(--enamel-lavender);
+    box-shadow: none;
+}
+
+.enamel-call-btn:hover {
+    border-color: var(--enamel-purple);
+    color: var(--enamel-purple);
+}
+
+.enamel-action-btn:active {
+    transform: translateY(1px);
+}
+
+/* ---------------------------------------------------------------------------
+   Mobile Responsive
+--------------------------------------------------------------------------- */
+@media (max-width: 480px) {
+    .enamel-form-header {
+        padding: 24px 24px;
+    }
+
+    .enamel-form-header h2 {
+        font-size: 22px;
+    }
+
+    .enamel-form-body {
+        padding: 24px 24px;
+    }
+
+    .enamel-result {
+        padding: 20px 20px;
+        margin: 0 4px 4px 4px;
+    }
+
+    .enamel-submit-btn {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 360px) {
+    .enamel-form-header {
+        padding: 20px 16px;
+    }
+
+    .enamel-form-header h2 {
+        font-size: 20px;
+    }
+
+    .enamel-form-body {
+        padding: 20px 16px;
+    }
+}
