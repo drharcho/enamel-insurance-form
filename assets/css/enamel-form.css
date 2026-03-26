@@ -49,22 +49,28 @@
 }
 
 .enamel-form-header h2 {
-    font-family: 'Montserrat', Helvetica, Arial, sans-serif;
-    font-weight: 800;
-    font-size: 26px;
-    color: var(--enamel-white);
-    margin: 0 0 8px 0;
-    line-height: 1.2;
-    letter-spacing: -0.3px;
+    font-family: 'Montserrat', Helvetica, Arial, sans-serif !important;
+    font-weight: 800 !important;
+    font-size: 26px !important;
+    color: #ffffff !important;
+    margin: 0 0 8px 0 !important;
+    line-height: 1.2 !important;
+    letter-spacing: -0.3px !important;
+    text-shadow: none !important;
+    background: none !important;
+    padding: 0 !important;
+    border: none !important;
 }
 
 .enamel-form-header p {
-    font-family: 'Rubik', Helvetica, Arial, sans-serif;
-    font-weight: 400;
-    font-size: 15px;
-    color: rgba(255, 255, 255, 0.8);
-    margin: 0;
-    line-height: 1.5;
+    font-family: 'Rubik', Helvetica, Arial, sans-serif !important;
+    font-weight: 400 !important;
+    font-size: 15px !important;
+    color: rgba(255, 255, 255, 0.8) !important;
+    margin: 0 !important;
+    line-height: 1.5 !important;
+    background: none !important;
+    padding: 0 !important;
 }
 
 /* ---------------------------------------------------------------------------
