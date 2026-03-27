@@ -3,7 +3,7 @@
  * Plugin Name: Enamel Insurance Form
  * Plugin URI:  https://enameldentistry.com
  * Description: Insurance verification and lead capture form for Enamel Dentistry
- * Version:     1.0.2
+ * Version:     1.0.3
  * Author:      Enamel Dentistry
  * Author URI:  https://enameldentistry.com
  * License:     GPL-2.0+
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 // ---------------------------------------------------------------------------
 // Constants
 // ---------------------------------------------------------------------------
-define( 'ENAMEL_IF_VERSION', '1.0.2' );
+define( 'ENAMEL_IF_VERSION', '1.0.3' );
 define( 'ENAMEL_IF_PATH',    plugin_dir_path( __FILE__ ) );
 define( 'ENAMEL_IF_URL',     plugin_dir_url( __FILE__ ) );
 

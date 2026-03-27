@@ -24,12 +24,14 @@ class Enamel_Admin_Settings {
     // -----------------------------------------------------------------------
 
     public function add_menu_page() {
-        add_options_page(
+        add_menu_page(
             'Enamel Insurance Form',
             'Enamel Insurance Form',
             'manage_options',
             self::PAGE_SLUG,
-            array( $this, 'render_page' )
+            array( $this, 'render_page' ),
+            'dashicons-shield-alt',
+            30
         );
     }
 
