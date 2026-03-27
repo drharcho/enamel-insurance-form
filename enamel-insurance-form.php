@@ -3,7 +3,7 @@
  * Plugin Name: Enamel Insurance Form
  * Plugin URI:  https://enameldentistry.com
  * Description: Insurance verification and lead capture form for Enamel Dentistry
- * Version:     1.0.1
+ * Version:     1.0.2
  * Author:      Enamel Dentistry
  * Author URI:  https://enameldentistry.com
  * License:     GPL-2.0+
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 // ---------------------------------------------------------------------------
 // Constants
 // ---------------------------------------------------------------------------
-define( 'ENAMEL_IF_VERSION', '1.0.1' );
+define( 'ENAMEL_IF_VERSION', '1.0.2' );
 define( 'ENAMEL_IF_PATH',    plugin_dir_path( __FILE__ ) );
 define( 'ENAMEL_IF_URL',     plugin_dir_url( __FILE__ ) );
 
@@ -415,12 +415,23 @@ function enamel_if_check_for_update( $transient ) {
     $latest_version = ltrim( $release['tag_name'], 'v' );
 
     if ( version_compare( $latest_version, ENAMEL_IF_VERSION, '>' ) ) {
+        // Use the uploaded zip asset if available, fall back to zipball
+        $package = $release['zipball_url'];
+        if ( ! empty( $release['assets'] ) ) {
+            foreach ( $release['assets'] as $asset ) {
+                if ( pathinfo( $asset['name'], PATHINFO_EXTENSION ) === 'zip' ) {
+                    $package = $asset['browser_download_url'];
+                    break;
+                }
+            }
+        }
+
         $transient->response[ $plugin_slug ] = (object) array(
             'slug'        => dirname( $plugin_slug ),
             'plugin'      => $plugin_slug,
             'new_version' => $latest_version,
             'url'         => 'https://github.com/drharcho/enamel-insurance-form',
-            'package'     => $release['zipball_url'],
+            'package'     => $package,
         );
     }
 
