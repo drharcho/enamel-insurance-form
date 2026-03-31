@@ -48,27 +48,23 @@
         if (!form) { return; }
 
         bindEvents();
-        checkPrefilledLocation();
     });
-
-    // Also fire on window load and after a short delay — Elementor and other
-    // page builders often set select values after DOMContentLoaded.
-    window.addEventListener('load', checkPrefilledLocation);
-    setTimeout(checkPrefilledLocation, 300);
-
-    function checkPrefilledLocation() {
-        if (locationSelect && locationSelect.value && allInsurances.length === 0) {
-            handleLocationChange();
-        }
-    }
 
     // -----------------------------------------------------------------------
     // Event binding
     // -----------------------------------------------------------------------
     function bindEvents() {
-        // Location change
+        // Location change — listen to native event AND poll for page-builder
+        // frameworks (e.g. Elementor) that set the value without firing 'change'.
         if (locationSelect) {
             locationSelect.addEventListener('change', handleLocationChange);
+            var _lastLocationValue = locationSelect.value;
+            setInterval(function () {
+                if (locationSelect.value !== _lastLocationValue) {
+                    _lastLocationValue = locationSelect.value;
+                    handleLocationChange();
+                }
+            }, 200);
         }
 
         // Combobox input — filter on keyup
