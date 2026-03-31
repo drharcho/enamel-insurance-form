@@ -3,7 +3,7 @@
  * Plugin Name: Enamel Insurance Form
  * Plugin URI:  https://enameldentistry.com
  * Description: Insurance verification and lead capture form for Enamel Dentistry
- * Version:     1.0.6
+ * Version:     1.0.7
  * Author:      Enamel Dentistry
  * Author URI:  https://enameldentistry.com
  * License:     GPL-2.0+
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 // ---------------------------------------------------------------------------
 // Constants
 // ---------------------------------------------------------------------------
-define( 'ENAMEL_IF_VERSION', '1.0.6' );
+define( 'ENAMEL_IF_VERSION', '1.0.7' );
 define( 'ENAMEL_IF_PATH',    plugin_dir_path( __FILE__ ) );
 define( 'ENAMEL_IF_URL',     plugin_dir_url( __FILE__ ) );
 
@@ -279,7 +279,8 @@ function enamel_if_ajax_submit_form() {
             'email'     => $email,
             'location'  => $location,
             'insurance' => $insurance_label,
-            'accepted'  => $is_other ? 'other' : $accepted,
+            'accepted'  => $accepted,
+            'other'     => $is_other,
         ) );
     }
 
@@ -288,7 +289,7 @@ function enamel_if_ajax_submit_form() {
         $message = 'Our team will be reaching out to you shortly to talk about your insurance plan.';
     } elseif ( $accepted ) {
         $message = sprintf(
-            'Great news! We accept %s at %s. We\'ll be in touch soon to schedule your appointment!',
+            'Great news! We likely accept %s at %s. Our team will still need to verify your details to confirm — we\'ll be in touch shortly!',
             esc_html( $insurance_label ),
             esc_html( $location )
         );

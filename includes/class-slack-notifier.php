@@ -34,12 +34,18 @@ class Enamel_Slack_Notifier {
         $email     = isset( $data['email'] )     ? $data['email']     : '';
         $location  = isset( $data['location'] )  ? $data['location']  : '';
         $insurance = isset( $data['insurance'] ) ? $data['insurance'] : '';
-        $accepted  = ! empty( $data['accepted'] );
+        $accepted  = isset( $data['accepted'] ) ? $data['accepted'] : false;
+        $is_other  = ! empty( $data['other'] );
 
-        if ( $accepted ) {
+        if ( $is_other ) {
+            $status_emoji = ':mag:';
+            $status_label = 'Insurance Needs to Be Checked';
+            $status_text  = 'This patient\'s insurance *needs to be verified* — please reach out to confirm coverage.';
+            $status_color = '#E56B10';
+        } elseif ( $accepted ) {
             $status_emoji = ':white_check_mark:';
-            $status_label = 'Insurance Accepted';
-            $status_text  = 'This patient\'s insurance *is accepted* at this location.';
+            $status_label = 'Insurance Likely Accepted';
+            $status_text  = 'This patient\'s insurance *is on our accepted list*. Please verify their details to confirm.';
             $status_color = '#7D55C7';
         } else {
             $status_emoji = ':x:';
