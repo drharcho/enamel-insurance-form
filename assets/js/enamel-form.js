@@ -70,6 +70,7 @@
             comboboxInput.addEventListener('keyup', handleComboboxKeyup);
             comboboxInput.addEventListener('keydown', handleComboboxKeydown);
             comboboxInput.addEventListener('focus', handleComboboxFocus);
+            comboboxInput.addEventListener('click', handleComboboxFocus);
             comboboxInput.addEventListener('input', handleComboboxInput);
         }
 
