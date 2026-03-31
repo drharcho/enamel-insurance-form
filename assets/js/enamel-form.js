@@ -48,13 +48,19 @@
         if (!form) { return; }
 
         bindEvents();
+        checkPrefilledLocation();
+    });
 
-        // If location was pre-filled (browser autofill, Elementor, etc.)
-        // the change event won't fire — trigger it manually.
-        if (locationSelect && locationSelect.value) {
+    // Also fire on window load and after a short delay — Elementor and other
+    // page builders often set select values after DOMContentLoaded.
+    window.addEventListener('load', checkPrefilledLocation);
+    setTimeout(checkPrefilledLocation, 300);
+
+    function checkPrefilledLocation() {
+        if (locationSelect && locationSelect.value && allInsurances.length === 0) {
             handleLocationChange();
         }
-    });
+    }
 
     // -----------------------------------------------------------------------
     // Event binding
