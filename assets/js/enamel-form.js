@@ -432,6 +432,14 @@
             valid = false;
         }
 
+        // If user typed something not in the list, treat as Other
+        var typedText = comboboxInput ? comboboxInput.value.trim() : '';
+        if (!insurance && typedText) {
+            insurance = 'Other';
+            if (otherWrap) { otherWrap.style.display = 'block'; }
+            if (otherInput && !otherInput.value.trim()) { otherInput.value = typedText; }
+        }
+
         if (!insurance) {
             setFieldError('enamel-insurance-error', 'Please select your insurance provider.');
             valid = false;
@@ -440,6 +448,7 @@
         var insuranceOther = '';
         if (insurance === 'Other') {
             insuranceOther = otherInput ? otherInput.value.trim() : '';
+            if (!insuranceOther) { insuranceOther = typedText; }
             if (!insuranceOther) {
                 setFieldError('enamel-other-insurance-error', 'Please describe your insurance plan.');
                 if (otherInput) { otherInput.classList.add('has-error'); }
