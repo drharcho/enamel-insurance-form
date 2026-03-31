@@ -165,20 +165,25 @@
 }
 
 .enamel-combobox-toggle {
-    position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    background: none;
-    border: none;
-    padding: 0 14px;
+    position: absolute !important;
+    right: 0 !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    background: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    padding: 0 14px !important;
+    margin: 0 !important;
     color: var(--enamel-purple);
     cursor: pointer;
     font-size: 12px;
     line-height: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
     transition: transform 0.15s ease;
 }
 

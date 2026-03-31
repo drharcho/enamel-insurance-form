@@ -48,6 +48,12 @@
         if (!form) { return; }
 
         bindEvents();
+
+        // If location was pre-filled (browser autofill, Elementor, etc.)
+        // the change event won't fire — trigger it manually.
+        if (locationSelect && locationSelect.value) {
+            handleLocationChange();
+        }
     });
 
     // -----------------------------------------------------------------------
@@ -188,8 +194,7 @@
         highlightedIndex       = -1;
 
         if (items.length === 0) {
-            comboboxList.innerHTML = '<li class="no-results">No insurances found for this location.</li>';
-            return;
+            comboboxList.innerHTML = '<li class="no-results" style="cursor:default;">No insurance plans listed — select Other below.</li>';
         }
 
         items.forEach(function (name, index) {
