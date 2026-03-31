@@ -108,6 +108,11 @@ if ( ! defined( 'ABSPATH' ) ) {
                     </div>
                     <input type="hidden" name="insurance" id="enamel-insurance-value">
                     <span class="enamel-field-error" id="enamel-insurance-error" aria-live="polite"></span>
+                    <div id="enamel-other-insurance-wrap" style="display:none;margin-top:10px;">
+                        <input type="text" id="enamel-other-insurance" name="insurance_other" class="enamel-input"
+                            placeholder="Please describe your insurance plan…" autocomplete="off">
+                        <span class="enamel-field-error" id="enamel-other-insurance-error" aria-live="polite"></span>
+                    </div>
                 </div>
 
                 <!-- Nonce -->

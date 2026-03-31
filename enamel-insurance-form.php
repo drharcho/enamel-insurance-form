@@ -3,7 +3,7 @@
  * Plugin Name: Enamel Insurance Form
  * Plugin URI:  https://enameldentistry.com
  * Description: Insurance verification and lead capture form for Enamel Dentistry
- * Version:     1.0.4
+ * Version:     1.0.5
  * Author:      Enamel Dentistry
  * Author URI:  https://enameldentistry.com
  * License:     GPL-2.0+
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 // ---------------------------------------------------------------------------
 // Constants
 // ---------------------------------------------------------------------------
-define( 'ENAMEL_IF_VERSION', '1.0.4' );
+define( 'ENAMEL_IF_VERSION', '1.0.5' );
 define( 'ENAMEL_IF_PATH',    plugin_dir_path( __FILE__ ) );
 define( 'ENAMEL_IF_URL',     plugin_dir_url( __FILE__ ) );
 
@@ -232,11 +232,12 @@ function enamel_if_ajax_submit_form() {
     check_ajax_referer( 'enamel_if_nonce', 'nonce' );
 
     // --- Sanitize inputs ---
-    $name      = isset( $_POST['name'] )      ? sanitize_text_field( wp_unslash( $_POST['name'] ) )      : '';
-    $phone     = isset( $_POST['phone'] )     ? sanitize_text_field( wp_unslash( $_POST['phone'] ) )     : '';
-    $email     = isset( $_POST['email'] )     ? sanitize_email( wp_unslash( $_POST['email'] ) )          : '';
-    $location  = isset( $_POST['location'] )  ? sanitize_text_field( wp_unslash( $_POST['location'] ) )  : '';
-    $insurance = isset( $_POST['insurance'] ) ? sanitize_text_field( wp_unslash( $_POST['insurance'] ) ) : '';
+    $name            = isset( $_POST['name'] )            ? sanitize_text_field( wp_unslash( $_POST['name'] ) )            : '';
+    $phone           = isset( $_POST['phone'] )           ? sanitize_text_field( wp_unslash( $_POST['phone'] ) )           : '';
+    $email           = isset( $_POST['email'] )           ? sanitize_email( wp_unslash( $_POST['email'] ) )                : '';
+    $location        = isset( $_POST['location'] )        ? sanitize_text_field( wp_unslash( $_POST['location'] ) )        : '';
+    $insurance       = isset( $_POST['insurance'] )       ? sanitize_text_field( wp_unslash( $_POST['insurance'] ) )       : '';
+    $insurance_other = isset( $_POST['insurance_other'] ) ? sanitize_text_field( wp_unslash( $_POST['insurance_other'] ) ) : '';
 
     // --- Basic server-side validation ---
     $errors = array();
@@ -252,14 +253,19 @@ function enamel_if_ajax_submit_form() {
         wp_send_json_error( array( 'message' => implode( ' ', $errors ) ) );
     }
 
-    // --- Check insurance against the admin-managed list ---
-    $insurance_list = enamel_if_get_insurance_list();
-    $accepted       = false;
+    // --- Handle "Other" insurance ---
+    $is_other = ( $insurance === 'Other' );
+    $insurance_label = $is_other ? ( ! empty( $insurance_other ) ? $insurance_other : 'Other' ) : $insurance;
 
-    foreach ( $insurance_list as $item ) {
-        if ( strcasecmp( trim( $item ), trim( $insurance ) ) === 0 ) {
-            $accepted = true;
-            break;
+    // --- Check insurance against the admin-managed list ---
+    $accepted = false;
+    if ( ! $is_other ) {
+        $insurance_list = enamel_if_get_insurance_list();
+        foreach ( $insurance_list as $item ) {
+            if ( strcasecmp( trim( $item ), trim( $insurance ) ) === 0 ) {
+                $accepted = true;
+                break;
+            }
         }
     }
 
@@ -272,28 +278,31 @@ function enamel_if_ajax_submit_form() {
             'phone'     => $phone,
             'email'     => $email,
             'location'  => $location,
-            'insurance' => $insurance,
-            'accepted'  => $accepted,
+            'insurance' => $insurance_label,
+            'accepted'  => $is_other ? 'other' : $accepted,
         ) );
     }
 
     // --- Build response message ---
-    if ( $accepted ) {
+    if ( $is_other ) {
+        $message = 'Our team will be reaching out to you shortly to talk about your insurance plan.';
+    } elseif ( $accepted ) {
         $message = sprintf(
             'Great news! We accept %s at %s. We\'ll be in touch soon to schedule your appointment!',
-            esc_html( $insurance ),
+            esc_html( $insurance_label ),
             esc_html( $location )
         );
     } else {
         $message = sprintf(
             'We don\'t currently list %s at %s, but our team will reach out to explore your options.',
-            esc_html( $insurance ),
+            esc_html( $insurance_label ),
             esc_html( $location )
         );
     }
 
     wp_send_json_success( array(
         'accepted'    => $accepted,
+        'other'       => $is_other,
         'message'     => $message,
         'booking_url' => enamel_if_get_booking_url( $location ),
         'phone'       => enamel_if_get_phone( $location ),

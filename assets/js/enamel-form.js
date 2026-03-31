@@ -20,7 +20,7 @@
     // -----------------------------------------------------------------------
     var form, locationSelect, comboboxWrapper, comboboxInput, comboboxToggle,
         comboboxList, insuranceHidden, submitBtn, btnLabel, btnSpinner,
-        resultDiv;
+        resultDiv, otherWrap, otherInput;
 
     // Combobox state
     var allInsurances    = [];   // full list from server
@@ -42,6 +42,8 @@
         btnLabel        = submitBtn ? submitBtn.querySelector('.enamel-btn-label') : null;
         btnSpinner      = submitBtn ? submitBtn.querySelector('.enamel-btn-spinner') : null;
         resultDiv       = document.getElementById('enamel-form-result');
+        otherWrap       = document.getElementById('enamel-other-insurance-wrap');
+        otherInput      = document.getElementById('enamel-other-insurance');
 
         if (!form) { return; }
 
@@ -157,6 +159,7 @@
         comboboxList.innerHTML = '';
         closeCombobox();
         clearFieldError('enamel-insurance-error');
+        hideOtherField();
     }
 
     function setComboboxLoading(isLoading) {
@@ -207,6 +210,20 @@
 
             comboboxList.appendChild(li);
         });
+
+        // Always append "Other" at the bottom
+        var otherLi = document.createElement('li');
+        otherLi.textContent = 'Other';
+        otherLi.setAttribute('role', 'option');
+        otherLi.setAttribute('aria-selected', 'false');
+        otherLi.classList.add('enamel-other-option');
+        otherLi.addEventListener('click', function () {
+            selectInsurance('Other');
+        });
+        otherLi.addEventListener('mouseenter', function () {
+            setHighlighted(items.length);
+        });
+        comboboxList.appendChild(otherLi);
     }
 
     function selectInsurance(name) {
@@ -215,6 +232,27 @@
         comboboxInput.setAttribute('aria-expanded', 'false');
         clearFieldError('enamel-insurance-error');
         closeCombobox();
+
+        if (name === 'Other') {
+            showOtherField();
+        } else {
+            hideOtherField();
+        }
+    }
+
+    function showOtherField() {
+        if (otherWrap) {
+            otherWrap.style.display = 'block';
+            if (otherInput) { otherInput.focus(); }
+        }
+    }
+
+    function hideOtherField() {
+        if (otherWrap) {
+            otherWrap.style.display = 'none';
+            if (otherInput) { otherInput.value = ''; }
+            clearFieldError('enamel-other-insurance-error');
+        }
     }
 
     function openCombobox() {
@@ -399,18 +437,29 @@
             valid = false;
         }
 
+        var insuranceOther = '';
+        if (insurance === 'Other') {
+            insuranceOther = otherInput ? otherInput.value.trim() : '';
+            if (!insuranceOther) {
+                setFieldError('enamel-other-insurance-error', 'Please describe your insurance plan.');
+                if (otherInput) { otherInput.classList.add('has-error'); }
+                valid = false;
+            }
+        }
+
         if (!valid) { return; }
 
         setLoadingState(true);
 
         var body = new FormData();
-        body.append('action',    'enamel_submit_form');
-        body.append('nonce',     NONCE);
-        body.append('name',      name);
-        body.append('phone',     phone);
-        body.append('email',     email);
-        body.append('location',  location);
-        body.append('insurance', insurance);
+        body.append('action',           'enamel_submit_form');
+        body.append('nonce',            NONCE);
+        body.append('name',             name);
+        body.append('phone',            phone);
+        body.append('email',            email);
+        body.append('location',         location);
+        body.append('insurance',        insurance);
+        body.append('insurance_other',  insuranceOther);
 
         fetch(AJAX_URL, {
             method:      'POST',
@@ -428,11 +477,12 @@
             }
 
             var accepted   = json.data.accepted;
+            var isOther    = json.data.other || false;
             var message    = json.data.message;
             var bookingUrl = json.data.booking_url || '';
             var phone      = json.data.phone || '';
 
-            showResult(accepted, message, bookingUrl, phone);
+            showResult(accepted, isOther, message, bookingUrl, phone);
         })
         .catch(function () {
             setLoadingState(false);
@@ -443,15 +493,26 @@
     // -----------------------------------------------------------------------
     // Result display
     // -----------------------------------------------------------------------
-    function showResult(accepted, message, bookingUrl, phone) {
+    function showResult(accepted, isOther, message, bookingUrl, phone) {
         form.style.display = 'none';
 
-        var icon     = accepted ? '\u2713' : '\u2139';
-        var heading  = accepted ? 'You\u2019re covered!' : 'We\u2019ll help you out';
-        var cssClass = accepted ? 'accepted' : 'not-accepted';
+        var icon, heading, cssClass;
+        if (accepted) {
+            icon     = '\u2713';
+            heading  = 'You\u2019re covered!';
+            cssClass = 'accepted';
+        } else if (isOther) {
+            icon     = '\u2709';
+            heading  = 'We\u2019ll be in touch!';
+            cssClass = 'not-accepted';
+        } else {
+            icon     = '\u2139';
+            heading  = 'We\u2019ll help you out';
+            cssClass = 'not-accepted';
+        }
 
         var buttonsHtml = '';
-        if (accepted) {
+        if (accepted || isOther) {
             if (bookingUrl) {
                 buttonsHtml += '<a href="' + escapeHtml(bookingUrl) + '" class="enamel-action-btn enamel-book-btn" target="_blank" rel="noopener">Book Online</a>';
             }
