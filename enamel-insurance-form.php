@@ -3,7 +3,7 @@
  * Plugin Name: Enamel Insurance Form
  * Plugin URI:  https://enameldentistry.com
  * Description: Insurance verification and lead capture form for Enamel Dentistry
- * Version:     1.1.2
+ * Version:     1.1.3
  * Author:      Enamel Dentistry
  * Author URI:  https://enameldentistry.com
  * License:     GPL-2.0+
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 // ---------------------------------------------------------------------------
 // Constants
 // ---------------------------------------------------------------------------
-define( 'ENAMEL_IF_VERSION', '1.1.2' );
+define( 'ENAMEL_IF_VERSION', '1.1.3' );
 define( 'ENAMEL_IF_PATH',    plugin_dir_path( __FILE__ ) );
 define( 'ENAMEL_IF_URL',     plugin_dir_url( __FILE__ ) );
 
@@ -189,6 +189,39 @@ function enamel_if_late_enqueue() {
             )
         );
     }
+}
+
+// ---------------------------------------------------------------------------
+// Keep "remove unused CSS" optimizers from stripping our dynamic styles
+// ---------------------------------------------------------------------------
+// The result panel (icon, copy, Book Online / Call Now buttons) is built by JS
+// after the AJAX response, so these class names never appear in the HTML that
+// WP Rocket's Remove Unused CSS scans. It drops the rules, and logged-out
+// visitors get unstyled links while logged-in admins — who bypass the cache —
+// see the form render correctly. templates/form.php also emits a hidden
+// safelist node for optimizers that offer no filter.
+add_filter( 'rocket_rucss_safelist', 'enamel_if_rucss_safelist' );
+
+function enamel_if_rucss_safelist( $safelist ) {
+    if ( ! is_array( $safelist ) ) {
+        $safelist = array();
+    }
+
+    return array_merge(
+        $safelist,
+        array(
+            '.enamel-result',
+            '.enamel-result-icon',
+            '.enamel-result-actions',
+            '.enamel-action-btn',
+            '.enamel-book-btn',
+            '.enamel-call-btn',
+            '.enamel-combobox-loading',
+            '.no-results',
+            '.accepted',
+            '.not-accepted',
+        )
+    );
 }
 
 // ---------------------------------------------------------------------------

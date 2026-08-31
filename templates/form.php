@@ -137,6 +137,32 @@ $n = $enamel_if_instance;
 
             <!-- Result area -->
             <div id="enamel-form-result-<?php echo $n; ?>" class="enamel-result" style="display:none;" aria-live="polite"></div>
+
+            <?php if ( 1 === $n ) : ?>
+            <!--
+                CSS safelist. The result markup above is injected by JS after the
+                AJAX response, so "remove unused CSS" optimizers (WP Rocket RUCSS,
+                LiteSpeed UCSS, Perfmatters, etc.) scan the server-rendered HTML,
+                never see these classes, and strip their rules from the stylesheet.
+                Logged-in admins bypass the optimizer and so never see the breakage.
+                Rendering the class names once, hidden, keeps those rules alive.
+            -->
+            <div class="enamel-css-safelist" aria-hidden="true" hidden style="display:none !important;">
+                <div class="enamel-result accepted not-accepted">
+                    <span class="enamel-result-icon"></span>
+                    <h3></h3>
+                    <p></p>
+                    <div class="enamel-result-actions">
+                        <a class="enamel-action-btn enamel-book-btn"></a>
+                        <a class="enamel-action-btn enamel-call-btn"></a>
+                    </div>
+                </div>
+                <ul class="enamel-combobox-list">
+                    <li class="no-results"></li>
+                    <li class="enamel-combobox-loading"></li>
+                </ul>
+            </div>
+            <?php endif; ?>
         </div><!-- /.enamel-form-body -->
 
     </div><!-- /.enamel-form-card -->
